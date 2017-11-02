@@ -1,10 +1,10 @@
 ARG ALPINE_VERSION
 FROM johannweging/base-alpine:$ALPINE_VERSION
 
-ARG MONGODB_VERSION_ASSERTION
+ARG MONGODB_VERSION_ASSERT
 
 RUN set -x \
-&& apk add --no-cache --update "mongodb$MONGODB_VERSION_ASSERTION"
+&& apk add --no-cache --update "mongodb$MONGODB_VERSION_ASSERT"
 
 ADD rootfs /
 
