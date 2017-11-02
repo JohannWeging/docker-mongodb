@@ -20,9 +20,8 @@ before_script:
 
 script:
   - source env.sh
-  - >
-    docker build --build-arg="ALPINE_VERSION=${ALPINE_VERSION}" --build-arg="MONGODB_VERSION_ASSERTION=<$(echo -n ${MONGODB_VERSION}+0.1 | bc | tr -d ' \n')"
-    -t johannweging/mongodb:${MONGODB_VERSION} ./
+  - export MONGODB_VERSION_ASSERTION=<"$(echo -n ${MONGODB_VERSION}+0.1 | bc | tr -d ' \n')"
+  - docker build --build-arg="ALPINE_VERSION=${ALPINE_VERSION}" --build-arg="MONGODB_VERSION_ASSERTION=${MONGODB_VERSION_ASSERTION} -t johannweging/mongodb:${MONGODB_VERSION} ./
 
 before_deploy:
   - docker login --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}
