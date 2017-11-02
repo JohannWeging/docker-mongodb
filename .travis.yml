@@ -7,14 +7,19 @@ env:
   global:
     - LATEST=3.4
   matrix:
-    - ALPINE_VERSION=3.6
-    - MONGODB_VERSION=3.4
+    - ENVS=ALPINE_VERSION=3.6,MONGODB_VERSION=3.4
 install: true
 
 before_script:
   - docker --version
+  # setup env file
+  - oifs=${IFS}
+  - IFS=','
+  - for e in ${ENVS}; do echo "export $e" >> env.sh; done
+  - IFS=${oifs}
 
 script:
+  - source env.sh
   - >
     docker build --build-arg="ALPINE_VERSION=${ALPINE_VERSION}" --build-arg="MONGODB_VERSION_ASSERTION=<$(echo -n ${MONGODB_VERSION}+0.1 | bc | tr -d ' \n')"
     -t johannweging/mongodb:${MONGODB_VERSION} ./
