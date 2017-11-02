@@ -29,7 +29,7 @@ before_script:
 
 script:
   - source env.sh
-  - export MONGODB_VERSION_ASSERT="<$(echo -n ${MONGODB_VERSION}+0.1 | bc | tr -d ' ')"
+  - export MONGODB_VERSION_ASSERT="<$(echo ${MONGODB_VERSION}+0.1 | bc | tr -d ' ')"
   - docker build --build-arg="ALPINE_VERSION=${ALPINE_VERSION}" --build-arg="MONGODB_VERSION_ASSERT=${MONGODB_VERSION_ASSERT}" -t johannweging/mongodb:${MONGODB_VERSION} ./
 
 before_deploy:
